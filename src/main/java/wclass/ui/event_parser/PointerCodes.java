@@ -208,20 +208,24 @@ public class PointerCodes<C extends PointerCodes> implements Cloneable {
         float xAbs = abs(xCut);
         float yAbs = abs(yCut);
 
-        //横向
-        if (xAbs > wormH) {
-            //朝左
-            if (xCut < 0) {
-                firstOrien5 = Orien5.LEFT;
+        //x方向距离大，先验证x方向。
+        if(xAbs>yAbs){
+            //横向
+            if (xAbs > wormH) {
+                //朝左
+                if (xCut < 0) {
+                    firstOrien5 = Orien5.LEFT;
+                }
+                //朝右
+                else {
+                    firstOrien5 = Orien5.RIGHT;
+                }
+                firstWayCoor = xMove;
+                verifyFirstTouchOrienFinished = true;
             }
-            //朝右
-            else {
-                firstOrien5 = Orien5.RIGHT;
-            }
-            firstWayCoor = xMove;
         }
-        //纵向
-        else if (yAbs > wormV) {
+        //y方向距离大，验证y方向。
+        else{
             //朝上
             if (yCut < 0) {
                 firstOrien5 = Orien5.TOP;
@@ -231,11 +235,9 @@ public class PointerCodes<C extends PointerCodes> implements Cloneable {
                 firstOrien5 = Orien5.BOTTOM;
             }
             firstWayCoor = yMove;
-        } else {
-            return;
+            verifyFirstTouchOrienFinished = true;
         }
 
-        verifyFirstTouchOrienFinished = true;
     }
     //////////////////////////////////////////////////////////////////////
 
