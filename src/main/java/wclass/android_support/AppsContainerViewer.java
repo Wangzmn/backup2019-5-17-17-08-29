@@ -228,14 +228,14 @@ public class AppsContainerViewer {
         LinearLayout edits = new LinearLayout(context);
         edits.setOrientation(LinearLayout.VERTICAL);
         //高--匹配父容器。宽--权重为1。
-        LinearLayout.LayoutParams p = LayoutParamsUT.makeLinearLayoutParams(0, MATCH_PARENT,
+        LinearLayout.LayoutParams p = LayoutParamsUT.linearParams(0, MATCH_PARENT,
                 1);
         edits.setLayoutParams(p);
         root.addView(edits);
         //--------------------------------------------------
         /*ImageViews*/
         //所有imageView，宽--匹配父容器，高--权重为1。
-        LinearLayout.LayoutParams p1 = LayoutParamsUT.makeLinearLayoutParams(MATCH_PARENT
+        LinearLayout.LayoutParams p1 = LayoutParamsUT.linearParams(MATCH_PARENT
                 , 0, 1);
         ivRefresh = new ImageView(context);
         ivToStart = new ImageView(context);
@@ -255,7 +255,7 @@ public class AppsContainerViewer {
         edits.addView(ivExit);
         //--------------------------------------------------
         FrameLayout rvParent = new FrameLayout(context); //高--匹配父容器。宽--权重为4。
-        LinearLayout.LayoutParams p2 = LayoutParamsUT.makeLinearLayoutParams(0, MATCH_PARENT,
+        LinearLayout.LayoutParams p2 = LayoutParamsUT.linearParams(0, MATCH_PARENT,
                 4);
         rvParent.setLayoutParams(p2);
         //--------------------------------------------------
@@ -267,7 +267,7 @@ public class AppsContainerViewer {
         //--------------------------------------------------
         progressBar = new ProgressBar(context);
         progressBar.setVisibility(View.INVISIBLE);
-        FrameLayout.LayoutParams p3 = LayoutParamsUT.makeFrameLayoutParams(WRAP_CONTENT, WRAP_CONTENT, Gravity.CENTER);
+        FrameLayout.LayoutParams p3 = LayoutParamsUT.frameParams(WRAP_CONTENT, WRAP_CONTENT, Gravity.CENTER);
         progressBar.setLayoutParams(p3);
         rvParent.addView(progressBar);
         //--------------------------------------------------

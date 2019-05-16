@@ -211,7 +211,7 @@ public class ColorSelectorSuit extends FrameLayout {
         A.setOrientation(LinearLayout.HORIZONTAL);
         rainbow = new RainbowView(context);
         LinearLayout.LayoutParams params = LayoutParamsUT.
-                makeLinearLayoutParams(0, 1, 1);
+                linearParams(0, 1, 1);
         space = new View(context);
         space.setLayoutParams(params);
         A2 = new LinearLayout(context);
@@ -219,7 +219,7 @@ public class ColorSelectorSuit extends FrameLayout {
         lightInfoView = new InfoView(context);
         lightInfoView.setWordText("明暗度");
         lightSeek = new LightSeekBar(context);
-        LinearLayout.LayoutParams lightSeekP = LayoutParamsUT.makeLinearLayoutParams(
+        LinearLayout.LayoutParams lightSeekP = LayoutParamsUT.linearParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, 0, 1);
         lightSeek.setLayoutParams(lightSeekP);
         lightSeek.setProgress(255);
@@ -237,13 +237,13 @@ public class ColorSelectorSuit extends FrameLayout {
         alphaInfoView.setWordText("透明度");
         B2 = new LinearLayout(context);
         B2.setOrientation(LinearLayout.VERTICAL);
-        LinearLayout.LayoutParams pB2 = LayoutParamsUT.makeLinearLayoutParams(
+        LinearLayout.LayoutParams pB2 = LayoutParamsUT.linearParams(
                 0, ViewGroup.LayoutParams.MATCH_PARENT, 1);
         B2.setLayoutParams(pB2);
 
-        LinearLayout.LayoutParams pCurr = LayoutParamsUT.makeLinearLayoutParams(
+        LinearLayout.LayoutParams pCurr = LayoutParamsUT.linearParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, 0, 2);
-        LinearLayout.LayoutParams pAlphaSeek = LayoutParamsUT.makeLinearLayoutParams(
+        LinearLayout.LayoutParams pAlphaSeek = LayoutParamsUT.linearParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, 0, 1);
         currColor = new ImageView(context);
         currColor.setLayoutParams(pCurr);
@@ -272,7 +272,7 @@ public class ColorSelectorSuit extends FrameLayout {
         C.setOrientation(LinearLayout.VERTICAL);
         cancel = new Button(context);
         confirm = new Button(context);
-        LinearLayout.LayoutParams paramsInC = LayoutParamsUT.makeLinearLayoutParams(LayoutParams.MATCH_PARENT
+        LinearLayout.LayoutParams paramsInC = LayoutParamsUT.linearParams(LayoutParams.MATCH_PARENT
                 , 0, 1);
         cancel.setLayoutParams(paramsInC);
         confirm.setLayoutParams(paramsInC);

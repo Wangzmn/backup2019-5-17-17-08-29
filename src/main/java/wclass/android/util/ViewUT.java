@@ -11,7 +11,7 @@ import wclass.enums.Level3;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static wclass.android.util.LayoutParamsUT.makeLayoutParams;
+import static wclass.android.util.LayoutParamsUT.params;
 
 /**
  * @作者 做就行了！
@@ -68,7 +68,7 @@ public class ViewUT {
     public static void adjustSize(View view, int width, int height) {
         ViewGroup.LayoutParams lp = view.getLayoutParams();
         if (lp == null) {
-            lp = makeLayoutParams(width, height);
+            lp = params(width, height);
         } else {
             lp.width = width;
             lp.height = height;

@@ -45,7 +45,7 @@ public class BorderView extends LinearLayout {
         cm = SizeUT.getCMpixel(context);
         mm = cm / 10;
         createView();
-        LayoutParams lineParams = LayoutParamsUT.makeLinearLayoutParams(mm, (int) (cm * heightPerFromCM));
+        LayoutParams lineParams = LayoutParamsUT.linearParams(mm, (int) (cm * heightPerFromCM));
         line.setLayoutParams(lineParams);
 
         topView.setBackgroundColor(ColorUT.WHITE);
@@ -64,7 +64,7 @@ public class BorderView extends LinearLayout {
         //----------------------------------------------------------------------
         topView = new View(context);
         bottomView = new View(context);
-        LayoutParams subParams = LayoutParamsUT.makeLinearLayoutParams(LayoutParams.MATCH_PARENT, 0, 1);
+        LayoutParams subParams = LayoutParamsUT.linearParams(LayoutParams.MATCH_PARENT, 0, 1);
         topView.setLayoutParams(subParams);
         bottomView.setLayoutParams(subParams);
         //----------------------------------------------------------------------

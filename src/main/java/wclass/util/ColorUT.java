@@ -263,7 +263,43 @@ public class ColorUT {
     }
     //////////////////////////////////////////////////////////////////////
     /*domain 调试完成*/
+    //--------------------------------------------------
+    /*2019年5月15日23:01:13之后的。*/
 
+    /**
+     * 完成于 2019年5月15日23:07:47
+     * 降低颜色的饱和度。
+     *
+     * @param color        颜色。
+     * @param deSaturation 降低饱和度。
+     *                     @param referColor 靠近这个颜色。
+     * @return 降低颜色的饱和度。
+     */
+    public static int deSaturation(int color, float deSaturation,int referColor) {
+        int green = getGreen(color);
+        int blue = getBlue(color);
+        int red = getRed(color);
+        red = addSaturationColor(red, deSaturation, getRed(referColor));
+        green = addSaturationColor(green, deSaturation, getGreen(referColor));
+        blue = addSaturationColor(blue, deSaturation, getBlue(referColor));
+        return (color & ALPHA_MASK) | toRed(red) | toGreen(green) | blue;
+    }
+
+    /**
+     * 完成于 2019年5月15日23:07:47
+     * 增加饱和度
+     *
+     * @param colorValue
+     * @param saturation
+     * @param nearToColorValue  靠近这个颜色。
+     * @return
+     */
+    private static int addSaturationColor(int colorValue, float saturation,
+                                          int nearToColorValue) {
+        return (int) ((nearToColorValue - colorValue) * saturation + 0.5f + colorValue);
+    }
+    //--------------------------------------------------
+    /*2019年5月15日23:01:03之前的。*/
     /**
      * 运行于 2019年3月7日14:04:24
      * <p>
@@ -277,9 +313,9 @@ public class ColorUT {
         int green = getGreen(color);
         int blue = getBlue(color);
         int red = getRed(color);
-        red = addSaturationColor(deSaturation, red);
-        green = addSaturationColor(deSaturation, green);
-        blue = addSaturationColor(deSaturation, blue);
+        red = addSaturationColor(red, deSaturation);
+        green = addSaturationColor(green, deSaturation);
+        blue = addSaturationColor(blue, deSaturation);
         return (color & ALPHA_MASK) | toRed(red) | toGreen(green) | blue;
     }
 
@@ -295,31 +331,9 @@ public class ColorUT {
     public static int deSaturationRed(int color, float deSaturation) {
         int green = getGreen(color);
         int blue = getBlue(color);
-        green = addSaturationColor(deSaturation, green);
-        blue = addSaturationColor(deSaturation, blue);
+        green = addSaturationColor(green, deSaturation);
+        blue = addSaturationColor(blue, deSaturation);
         return reBlue(reGreen(color, green), blue);
-    }
-
-    /**
-     * 增加饱和度
-     *
-     * @param saturation
-     * @param colorValue
-     * @return
-     */
-    private static int addSaturationColor(float saturation, int colorValue) {
-        return (int) ((255 - colorValue) * saturation + 0.5f + colorValue);
-    }
-
-    /**
-     * 减少饱和度。
-     *
-     * @param saturation
-     * @param colorValue
-     * @return
-     */
-    private static int deSaturationColor(float saturation, int colorValue) {
-        return (int) (colorValue * (1 - saturation) + 0.5f);
     }
 
     /**
@@ -334,8 +348,8 @@ public class ColorUT {
     public static int deSaturationGreen(int color, float deSaturation) {
         int red = getRed(color);
         int blue = getBlue(color);
-        red = addSaturationColor(deSaturation, red);
-        blue = addSaturationColor(deSaturation, blue);
+        red = addSaturationColor(red, deSaturation);
+        blue = addSaturationColor(blue, deSaturation);
         return reBlue(reRed(color, red), blue);
     }
 
@@ -351,9 +365,31 @@ public class ColorUT {
     public static int deSaturationBlue(int color, float deSaturation) {
         int red = getRed(color);
         int green = getGreen(color);
-        red = addSaturationColor(deSaturation, red);
-        green = addSaturationColor(deSaturation, green);
+        red = addSaturationColor(red, deSaturation);
+        green = addSaturationColor(green, deSaturation);
         return reGreen(reRed(color, red), green);
+    }
+    //--------------------------------------------------
+    /**
+     * 增加饱和度
+     *
+     * @param colorValue
+     * @param saturation
+     * @return
+     */
+    private static int addSaturationColor(int colorValue, float saturation) {
+        return (int) ((255 - colorValue) * saturation + 0.5f + colorValue);
+    }
+
+    /**
+     * 减少饱和度。
+     *
+     * @param colorValue
+     * @param saturation
+     * @return
+     */
+    private static int deSaturationColor(int colorValue, float saturation) {
+        return (int) (colorValue * (1 - saturation) + 0.5f);
     }
 
     //----------------------------------------------------------------------

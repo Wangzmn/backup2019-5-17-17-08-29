@@ -14,9 +14,7 @@ package wclass.util;
  */
 public class StringUT {
 
-    public static String to16(Object s) {
+    public static String to16(Number s) {
         return String.format("%x", s);
     }
-
-
 }

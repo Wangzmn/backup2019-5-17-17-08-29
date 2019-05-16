@@ -175,6 +175,7 @@ public class PathUT {
                                             float offsetX,
                                             float offsetY,
                                             RectBoolean rectBoolean) {
+        path.rewind();
         /**
          * 解释：
          * 1、真正的描边宽度，是设置的值的一半。
@@ -334,13 +335,15 @@ public class PathUT {
     public static void progressInBounds(Rect bounds, Path path, float progress) {
         path.rewind();
         if (bounds.isEmpty()) {
-            Log.e("TAG", " bounds = " + bounds.toString() + "区域为空，无法绘制。");
+            Log.e("TAG","PathUT#progressInBounds:" +
+                    " bounds = " + bounds.toString() + "区域为空，无法绘制。");
             return;
         }
         float width = bounds.width();
         float height = bounds.height();
         if (height > width) {
-            Log.e("TAG", " bounds = " + bounds + "高大于宽，无法绘制。");
+            Log.e("TAG","PathUT#progressInBounds:" +
+                    " bounds = " + bounds + "高大于宽，无法绘制。");
             return;
         }
         //防止溢出。

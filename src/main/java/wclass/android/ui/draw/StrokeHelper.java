@@ -39,7 +39,7 @@ import wclass.android.util.RectUT;
  */
 @SuppressWarnings({"unused", "WeakerAccess"})
 public abstract class StrokeHelper {
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
     /**
      * 描边的路径。
      */
@@ -81,17 +81,17 @@ public abstract class StrokeHelper {
      */
     public void drawStrokes(Canvas canvas, Paint strokePaint) {
         if (DEBUG) {
-            Log.e("TAG", getClass().getCanonicalName() + "#drawStrokes" +
+            Log.e("TAG", getClass() + "#drawStrokes" +
                     "：needDrawStroke = " + needDrawStroke + " 。");
         }
         if (needDrawStroke) {
             if (DEBUG) {
-                Log.e("TAG", getClass().getCanonicalName() + "#drawStrokes" +
+                Log.e("TAG", getClass() + "#drawStrokes" +
                         "：一共" + strokeCount + "个描边。");
             }
             for (int i = 0; i < strokeCount; i++) {
                 if (DEBUG) {
-                    Log.e("TAG", getClass().getCanonicalName() + "#drawStrokes" +
+                    Log.e("TAG", getClass() + "#drawStrokes" +
                             "：正在绘制第" + i + "个描边。");
                 }
                 onDrawStroke(canvas, strokePaint, i);
@@ -248,7 +248,7 @@ public abstract class StrokeHelper {
         //空的绘制区域，不需要绘制。
         if (bounds.isEmpty()) {
             if (DEBUG) {
-                Log.e("TAG", getClass().getCanonicalName() + "#reStroke" +
+                Log.e("TAG", getClass() + "#redraw" +
                         "：bounds.isEmpty  ");
             }
             flagEmptyBounds();
@@ -258,7 +258,7 @@ public abstract class StrokeHelper {
         //没有描边，不需要绘制描边。
         if (scw == null) {
             if (DEBUG) {
-                Log.e("TAG", getClass().getCanonicalName() + "#reStroke" +
+                Log.e("TAG", getClass() + "#redraw" +
                         "：StrokesColorAndWidth == null  ");
             }
             needDrawStroke = false;
@@ -270,7 +270,7 @@ public abstract class StrokeHelper {
         //描边数量为0，不需要绘制描边。
         if (scwLength == 0) {
             if (DEBUG) {
-                Log.e("TAG", getClass().getCanonicalName() + "#reStroke" +
+                Log.e("TAG", getClass() + "#redraw" +
                         "：StrokesColorAndWidthLength == 0  ");
             }
             needDrawStroke = false;
@@ -291,7 +291,7 @@ public abstract class StrokeHelper {
         //描边宽度大于总距离的一半，无需绘制。（横向、纵向都得绘制两条边的描边。）
         if (totalStrokeWidth > width / 2 || totalStrokeWidth > height / 2) {
             if (DEBUG) {
-                Log.e("TAG", getClass().getCanonicalName() + "#reStroke" +
+                Log.e("TAG", getClass() + "#redraw" +
                         "：totalStrokeWidth > width / 2 || totalStrokeWidth > height / 2  ");
             }
             hasRestMidRegion = false;
@@ -300,13 +300,13 @@ public abstract class StrokeHelper {
             adjustMidRegionRect(bounds, totalStrokeWidth);
         }
         if (DEBUG) {
-            Log.e("TAG", getClass().getCanonicalName() + "#reStroke" +
+            Log.e("TAG", getClass() + "#redraw" +
                     "：needDrawStroke =  " + needDrawStroke + " 。");
-            Log.e("TAG", getClass().getCanonicalName() + "#reStroke" +
+            Log.e("TAG", getClass() + "#redraw" +
                     "：hasRestMidRegion = " + hasRestMidRegion + " 。");
-            Log.e("TAG", getClass().getCanonicalName() + "#reStroke" +
+            Log.e("TAG", getClass() + "#redraw" +
                     "：strokesColorAndWidthLength = " + scwLength + " 。");
-            Log.e("TAG", getClass().getCanonicalName() + "#reStroke" +
+            Log.e("TAG", getClass() + "#redraw" +
                     "：strokeCount = " + strokeCount + " 。");
         }
 

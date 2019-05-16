@@ -57,9 +57,9 @@ public class InfoView extends LinearLayout {
         numberTv.setGravity(Gravity.CENTER);
         //--------------------------------------------------
         /*高度比例绝对没有问题。*/
-        LayoutParams wordP = LayoutParamsUT.makeLinearLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+        LayoutParams wordP = LayoutParamsUT.linearParams(ViewGroup.LayoutParams.MATCH_PARENT
                 , 0, 1);
-        LayoutParams valueP = LayoutParamsUT.makeLinearLayoutParams(ViewGroup.LayoutParams.MATCH_PARENT
+        LayoutParams valueP = LayoutParamsUT.linearParams(ViewGroup.LayoutParams.MATCH_PARENT
                 , 0, 1);
         wordTv.setLayoutParams(wordP);
         numberTv.setLayoutParams(valueP);

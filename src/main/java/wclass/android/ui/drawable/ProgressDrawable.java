@@ -49,9 +49,15 @@ public class ProgressDrawable extends DrawableImpl {
      * 构造方法。
      */
     public ProgressDrawable() {
-        this(0,0xff00ff00);
+        this(1,0xff00ff00);
     }
 
+    /**
+     * 构造方法。
+     */
+    public ProgressDrawable(int color) {
+        this(1,color);
+    }
     /**
      * 构造方法。
      *

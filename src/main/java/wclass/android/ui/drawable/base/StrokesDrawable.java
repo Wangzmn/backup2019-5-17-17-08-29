@@ -44,50 +44,77 @@ public abstract class StrokesDrawable extends Drawable {
     /**
      * 标记是否需要重绘。
      */
-    private boolean needReDraw;
-
-    /**
-     * 标记是否需要重新计算描边信息。
-     */
-    boolean needReStroke;
+    private boolean needDraw;
 
     /**
      * 绘制区域的rect。
      */
-    private Rect mBounds = new Rect();
+    private Rect drawingRect = new Rect();
+    /**
+     * 原始的区域。
+     */
+    private Rect originRect = new Rect();
 
     /**
      * 绘制区域较短的那条边的大小。
      */
     private int minSide;
+    private boolean drawBoundsChanged;
+    /**
+     * 标记是否需要重新计算描边信息。
+     */
+    private boolean needRecalculated;
+
+    /**
+     * 设置您需要绘制的区域。
+     *
+     * @param drawingRect1 您的绘制区域。
+     */
+    public void setDrawingRect(Rect drawingRect1) {
+        drawingRect.set(drawingRect1);
+        needDraw = true;
+        needRecalculated = true;
+        invalidateSelf();
+    }
+
+    /**
+     * 获取原始的绘制区域。
+     *
+     * @param youRect 你的rect。
+     */
+    public void getOriginRect(Rect youRect) {
+        youRect.set(originRect);
+    }
     //////////////////////////////////////////////////////////////////////
 
     /**
      * 构造方法。
      */
     public StrokesDrawable() {
-        strokeHelper = new StrokeHelper() {
-            @Override
-            protected float getCornerRadius() {
-                return StrokesDrawable.this.getCornerRadius();
-            }
-
-            @Override
-            protected float[] getStrokesColorAndWidth() {
-                return StrokesDrawable.this.getStrokesColorAndWidth();
-            }
-
-            @Override
-            protected void onDrawStroke(Canvas canvas, Paint strokePaint, int strokeDex) {
-                StrokesDrawable.this.onDrawStroke(canvas, strokePaint, strokeDex);
-            }
-
-            @Override
-            protected RectBoolean getCircleCornerParams() {
-                return StrokesDrawable.this.getCircleCornerParams();
-            }
-        };
+        strokeHelper = new MStrokeHelper();
         strokePaint = onCreateStrokePaint();
+    }
+    class MStrokeHelper extends StrokeHelper{
+
+        @Override
+        protected float getCornerRadius() {
+            return StrokesDrawable.this.getCornerRadius();
+        }
+
+        @Override
+        protected float[] getStrokesColorAndWidth() {
+            return StrokesDrawable.this.getStrokesColorAndWidth();
+        }
+
+        @Override
+        protected void onDrawStroke(Canvas canvas, Paint strokePaint, int strokeDex) {
+            StrokesDrawable.this.onDrawStroke(canvas, strokePaint, strokeDex);
+        }
+
+        @Override
+        protected RectBoolean getCircleCornerParams() {
+            return StrokesDrawable.this.getCircleCornerParams();
+        }
     }
 
     /**
@@ -105,8 +132,8 @@ public abstract class StrokesDrawable extends Drawable {
      * 友情提示：如果手动更改了数组：{@link #getStrokesColorAndWidth()}，
      * 必须调用该方法！！！
      */
-    public void reStroke() {
-        needReDraw = true;
+    public void redraw() {
+        needDraw = true;
     }
     //--------------------------------------------------
 
@@ -205,26 +232,29 @@ public abstract class StrokesDrawable extends Drawable {
     }
 
     //////////////////////////////////////////////////
+
     @SuppressWarnings("NullableProblems")
     @Override
     public void draw(Canvas canvas) {
         if (DEBUG) {
-            Log.e("TAG", getClass().getCanonicalName() + "#draw：" +
-                    "needReDraw = " + needReDraw + " ," +
-                    "mBounds" + mBounds + " 。");
+            Log.e("TAG", getClass() + "#draw：" +
+                    "needDraw = " + needDraw + " ," +
+                    "originRect = " + originRect + " ," +
+                    "drawingRect" + drawingRect + " 。");
         }
-        if (needReDraw) {
-            if (needReStroke) {
+        if (needDraw) {
+            if (needRecalculated) {
+                needRecalculated = false;
                 if (DEBUG) {
-                    Log.e("TAG", getClass().getCanonicalName() + "#draw：" +
-                            "needReStroke = " + needReStroke + " 。");
+                    Log.e("TAG", getClass() + "#draw：" +
+                            "needRecalculated = " + needRecalculated + " 。");
                 }
-                strokeHelper.reStroke(mBounds);
+                strokeHelper.reStroke(drawingRect);
             }
             strokeHelper.drawStrokes(canvas, strokePaint);
             if (strokeHelper.hasRestMidRegion()) {
                 if (DEBUG) {
-                    Log.e("TAG", getClass().getCanonicalName() + "#draw：" +
+                    Log.e("TAG", getClass() + "#draw：" +
                             "hasRestMidRegion = " + strokeHelper.hasRestMidRegion() + " 。");
                 }
                 onDrawRestMidRegion(canvas, strokeHelper.getRestMidRegionRect(),
@@ -258,25 +288,27 @@ public abstract class StrokesDrawable extends Drawable {
     }
 
     //--------------------------------------------------
+
     @Override
     protected void onBoundsChange(Rect bounds) {
         if (DEBUG) {
-            Log.e("TAG", getClass().getCanonicalName()
+            Log.e("TAG", getClass()
                     + "#onBoundsChange");
         }
         super.onBoundsChange(bounds);
+        originRect.set(bounds);
+        minSide = RectUT.min(originRect);
+        //////////////////////////////////////////////////
         /**
          * 让子类设置自己的绘制区域。
          */
-        mBounds = preBoundsChange(bounds);
-        if (mBounds.isEmpty()) {
-            minSide = 0;
-            needReDraw = false;
+        drawingRect.set(preBoundsChange(bounds));
+        if (drawingRect.isEmpty()) {
+            needDraw = false;
             return;
         }
-        minSide = RectUT.min(mBounds);
-        needReDraw = true;
-        needReStroke = true;
+        needDraw = true;
+        needRecalculated = true;
     }
 
     /**
@@ -307,7 +339,7 @@ public abstract class StrokesDrawable extends Drawable {
                                        RectF restMidRegionRect,
                                        float restMidRegionCornerRadius) {
         if (DEBUG) {
-            Log.e("TAG", getClass().getCanonicalName()
+            Log.e("TAG", getClass()
                     + "#onDrawRestMidRegion");
         }
     }

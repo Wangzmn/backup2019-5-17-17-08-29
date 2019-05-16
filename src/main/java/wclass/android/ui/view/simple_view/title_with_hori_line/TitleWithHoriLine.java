@@ -85,9 +85,9 @@ public abstract class TitleWithHoriLine<T extends View> extends LinearLayout {
         rightLine = new ColorView(context, lineColor);
         title = onCreateMidView(context);
 
-        LayoutParams leftLP = LayoutParamsUT.makeLinearLayoutParams(0, getLineWidth(), 1);
+        LayoutParams leftLP = LayoutParamsUT.linearParams(0, getLineWidth(), 1);
         leftLP.rightMargin = getMidViewLeftMargin();
-        LayoutParams rightLP = LayoutParamsUT.makeLinearLayoutParams(0, getLineWidth(), 1);
+        LayoutParams rightLP = LayoutParamsUT.linearParams(0, getLineWidth(), 1);
         rightLP.leftMargin = getMidViewRightMargin();
         leftLine.setLayoutParams(leftLP);
         rightLine.setLayoutParams(rightLP);

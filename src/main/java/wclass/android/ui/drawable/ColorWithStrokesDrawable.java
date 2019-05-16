@@ -7,6 +7,8 @@ import android.graphics.RectF;
 import wclass.android.ui.draw.PaintUT;
 import wclass.android.ui.draw.StrokeHelper;
 import wclass.android.ui.drawable.base.StrokesDrawable;
+import wclass.android.ui.params.RectBoolean;
+import wclass.util.MathUT;
 
 /**
  * @作者 做就行了！
@@ -22,7 +24,7 @@ import wclass.android.ui.drawable.base.StrokesDrawable;
  * @待解决： -
  */
 public class ColorWithStrokesDrawable extends StrokesDrawable {
-    private Paint restMidRegionPaint;//绘制中间区域的画笔。
+    protected final Paint restMidRegionPaint;//绘制中间区域的画笔。
     private float cornerRadiusPerRelativeToMinSide;
     private float[] strokesColorAndWidth;
     //////////////////////////////////////////////////
@@ -33,10 +35,15 @@ public class ColorWithStrokesDrawable extends StrokesDrawable {
      * @param strokesColorAndWidth             {@link StrokeHelper#strokesColorAndWidth}
      */
     public ColorWithStrokesDrawable(int mainColor, float cornerRadiusPerRelativeToMinSide, float... strokesColorAndWidth) {
-        this.cornerRadiusPerRelativeToMinSide = cornerRadiusPerRelativeToMinSide;
+        this.cornerRadiusPerRelativeToMinSide =
+                MathUT.limit(cornerRadiusPerRelativeToMinSide,0,0.5f);
         this.strokesColorAndWidth = strokesColorAndWidth;
         restMidRegionPaint = PaintUT.solidPaint();
         restMidRegionPaint.setColor(mainColor);
+    }
+
+    public float getCornerRadiusPerRelativeToMinSide() {
+        return cornerRadiusPerRelativeToMinSide;
     }
 
     @Override

@@ -27,7 +27,7 @@ import wclass.android.util.ViewUT;
  */
 public class Buttons extends LinearLayout {
     private static final boolean DEBUG = false;
-    LayoutParams subLayoutParams = LayoutParamsUT.makeLinearLayoutParams(
+    LayoutParams subLayoutParams = LayoutParamsUT.linearParams(
             0, LayoutParams.MATCH_PARENT, 1
     );
     private Context context;
@@ -52,7 +52,7 @@ public class Buttons extends LinearLayout {
         super(context);
         this.listener = listener;
         this.context = context;
-        ViewGroup.LayoutParams lp = LayoutParamsUT.makeLayoutParams(
+        ViewGroup.LayoutParams lp = LayoutParamsUT.params(
                 LayoutParams.MATCH_PARENT, SizeUT.getCMpixel(context));
         setLayoutParams(lp);
         //----------------------------------------------------------------------

@@ -41,7 +41,7 @@ public abstract class LinearLayoutSimple extends LinearLayout {
         super(context);
 
         midChild = new View(context);
-        LayoutParams p = LayoutParamsUT.makeLinearWidthFill();
+        LayoutParams p = LayoutParamsUT.linearParamsWidthWeight();
         midChild.setLayoutParams(p);
         //先添加左边childs。
         for (int i = 0; i < leftCount; i++) {

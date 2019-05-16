@@ -27,6 +27,10 @@ public class RectBoolean {
             new RectBoolean(false, true, false, false);
     public static final RectBoolean RB =
             new RectBoolean(false, false, true, false);
+    public static final RectBoolean L =
+            new RectBoolean(true, false, false, true);
+    public static final RectBoolean R =
+            new RectBoolean(false, true, true, false);
     //////////////////////////////////////////////////
     public final boolean needLT;
     public final boolean needRT;

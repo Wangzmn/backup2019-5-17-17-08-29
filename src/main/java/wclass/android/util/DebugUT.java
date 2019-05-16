@@ -4,6 +4,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
+import wclass.android.util.debug.StringUT;
 import wclass.util.ColorUT;
 
 /**
@@ -20,6 +21,8 @@ import wclass.util.ColorUT;
  */
 @SuppressWarnings({"WeakerAccess", "unused"})
 public class DebugUT {
+
+    //////////////////////////////////////////////////
 
     /**
      * 将view和他的孩子全部设置成随机背景色。
