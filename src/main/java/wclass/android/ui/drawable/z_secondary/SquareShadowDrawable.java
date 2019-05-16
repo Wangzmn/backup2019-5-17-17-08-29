@@ -62,7 +62,7 @@ public class SquareShadowDrawable extends GradientWithStrokesDrawable {
     }
 
     @Override
-    protected Rect preBoundsChange(Rect bounds) {
+    protected Rect getDrawingRect(Rect bounds) {
         /*调整为正方形*/
         int width = bounds.width();
         int height = bounds.height();

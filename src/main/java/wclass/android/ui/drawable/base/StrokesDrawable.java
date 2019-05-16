@@ -134,6 +134,7 @@ public abstract class StrokesDrawable extends Drawable {
      */
     public void redraw() {
         needDraw = true;
+        needRecalculated = true;
     }
     //--------------------------------------------------
 
@@ -236,6 +237,7 @@ public abstract class StrokesDrawable extends Drawable {
     @SuppressWarnings("NullableProblems")
     @Override
     public void draw(Canvas canvas) {
+        preDraw(canvas);
         if (DEBUG) {
             Log.e("TAG", getClass() + "#draw：" +
                     "needDraw = " + needDraw + " ," +
@@ -260,6 +262,23 @@ public abstract class StrokesDrawable extends Drawable {
                 onDrawRestMidRegion(canvas, strokeHelper.getRestMidRegionRect(),
                         strokeHelper.getRestMidRegionCornerRadius());
             }
+        }
+    }
+
+    protected void preDraw(Canvas canvas) {
+        if(drawBoundsChanged){
+            drawBoundsChanged  =false;
+            minSide = RectUT.min(originRect);
+            /**
+             * 让子类设置自己的绘制区域。
+             */
+            drawingRect.set(getDrawingRect(originRect));
+            if (drawingRect.isEmpty()) {
+                needDraw = false;
+                return;
+            }
+            needDraw = true;
+            needRecalculated = true;
         }
     }
 
@@ -289,6 +308,16 @@ public abstract class StrokesDrawable extends Drawable {
 
     //--------------------------------------------------
 
+    /**
+     * drawable的大小改变时，该方法仅仅做个标记，
+     * 最后在该方法中处理：{@link #preDraw(Canvas)}。
+     *
+     * 理由：{@link #draw(Canvas)}之前必定会调用{@link #onBoundsChange(Rect)}。
+     * 但是调用几次呢？1次或许多次。
+     * 所以{@link #onBoundsChange(Rect)}中不适合逻辑处理，
+     * 真正需要计算的那一次是绘制的那一次，
+     * 所以在{@link #preDraw(Canvas)}中处理绝对是没错的。
+     */
     @Override
     protected void onBoundsChange(Rect bounds) {
         if (DEBUG) {
@@ -297,18 +326,7 @@ public abstract class StrokesDrawable extends Drawable {
         }
         super.onBoundsChange(bounds);
         originRect.set(bounds);
-        minSide = RectUT.min(originRect);
-        //////////////////////////////////////////////////
-        /**
-         * 让子类设置自己的绘制区域。
-         */
-        drawingRect.set(preBoundsChange(bounds));
-        if (drawingRect.isEmpty()) {
-            needDraw = false;
-            return;
-        }
-        needDraw = true;
-        needRecalculated = true;
+        drawBoundsChanged = true;
     }
 
     /**
@@ -327,7 +345,7 @@ public abstract class StrokesDrawable extends Drawable {
      * @param bounds 绘制区域。
      * @return 剩余的绘制区域。
      */
-    protected Rect preBoundsChange(Rect bounds) {
+    protected Rect getDrawingRect(Rect bounds) {
         return bounds;
     }
 

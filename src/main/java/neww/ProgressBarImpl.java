@@ -30,8 +30,10 @@ public class ProgressBarImpl extends SimpleProgressBar {
             0.5f,
             0xff000000, 1, 0xffaaaaaa, 1);
     ProgressDrawable progressPic;
-    private int pad;
+    private int margin;
     private CircleCornerDrawable thumbPic;
+
+    boolean on;
 
     public ProgressBarImpl(Context context) {
         super(context);
@@ -39,7 +41,7 @@ public class ProgressBarImpl extends SimpleProgressBar {
         if (pad < 4) {
             pad = 4;
         }
-        this.pad = pad / 2;
+        this.margin = pad / 2;
         int quarter = pad / 4;
         int innerPart = pad - quarter * 3;
         int outColor = 0xff000000;
@@ -56,19 +58,36 @@ public class ProgressBarImpl extends SimpleProgressBar {
         thumbPic = new CircleCornerDrawable(ColorUT.RED, RectBoolean.TRUE);
     }
 
-    boolean on;
+    //////////////////////////////////////////////////
 
+    @Override
+    protected void onDown() {
+        super.onDown();
+    }
+
+    @Override
+    protected void onUp(boolean click) {
+        super.onUp(click);
+        if(!click) {
+            float p = getProgress();
+            if (p < 0.5f){
+                animToProgress(0);
+            }else{
+                animToProgress(1);
+            }
+        }
+    }
+
+    //--------------------------------------------------
     @Override
     protected void onClickProtected() {
         super.onClickProtected();
         if (on) {
             on = false;
-            progressPic.setProgress(0);
-            thumbView.setX(length.start-thumbView.getWidth()/2);
+            animToProgress(0);
         } else {
             on = true;
-            progressPic.setProgress(1);
-            thumbView.setX(length.end-thumbView.getWidth()/2);
+            animToProgress(1);
         }
     }
 
@@ -79,12 +98,6 @@ public class ProgressBarImpl extends SimpleProgressBar {
         int end = w - h / 2;
         length.setLength(start,end);
         return length;
-    }
-    @Override
-    protected void onDown() {
-        super.onDown();
-//        float f = (float) Math.random();
-//        progressPic.setProgress(f);
     }
 
     @Override
@@ -118,7 +131,7 @@ public class ProgressBarImpl extends SimpleProgressBar {
     @Override
     protected void onAdjustProgressView(ImageView progressView, int w, int h) {
         progressView.setLayoutParams(LayoutParamsUT.frameParamsMatchParent(
-                pad, pad, pad, pad
+                margin, margin, margin, margin
         ));
     }
 

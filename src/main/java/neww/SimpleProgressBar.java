@@ -22,7 +22,6 @@ public abstract class SimpleProgressBar extends NewProgressBar<ImageView, ImageV
         super(context);
     }
 
-
     protected abstract void onSetBgViewPic(ImageView bgView);
 
     protected abstract void onSetProgressViewPic(ImageView progressView);
