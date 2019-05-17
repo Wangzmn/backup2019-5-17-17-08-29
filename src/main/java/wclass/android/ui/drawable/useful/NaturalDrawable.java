@@ -23,21 +23,31 @@ import wclass.util.ColorUT;
  * 1、构造方法参数加入渐变比例。
  */
 public class NaturalDrawable extends GradientWithStrokesDrawable {
-    public NaturalDrawable(int mainColor) {
-        this(mainColor, 0);
-    }
 
-    public NaturalDrawable(int mainColor, float cornerRadiusPerRelativeToMinSide) {
-        this(mainColor, cornerRadiusPerRelativeToMinSide, null);
-    }
-
+    /**
+     * 该类主要构造方法。
+     *
+     * @param mainColor 主色
+     * @param strokeWidth 描边宽度。
+     * @param cornerRadiusPerRelativeToMinSide 圆角半径。
+     */
     public NaturalDrawable(int mainColor, int strokeWidth,
                            float cornerRadiusPerRelativeToMinSide) {
         super(DrawableUT.normGradient(mainColor),
                 cornerRadiusPerRelativeToMinSide,
                 DrawableUT.normStrokeAndWidth(mainColor, strokeWidth));
     }
+    @Deprecated
+    public NaturalDrawable(int mainColor) {
+        this(mainColor, 0);
+    }
 
+    @Deprecated
+    public NaturalDrawable(int mainColor, float cornerRadiusPerRelativeToMinSide) {
+        this(mainColor, cornerRadiusPerRelativeToMinSide, null);
+    }
+
+    @Deprecated
     public NaturalDrawable(int mainColor, float cornerRadiusPerRelativeToMinSide,
                            float... strokeColorAndWidth) {
         super(DrawableUT.normGradient(mainColor),

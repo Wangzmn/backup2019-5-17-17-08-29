@@ -37,7 +37,7 @@ import wclass.util.MathUT;
  * 1、怎么确定进度的百分比？
  * 想完睡觉。
  */
-public abstract class NewProgressBar<B extends View, P extends View, T extends View> extends UsefulFrameLayout {
+public abstract class ProgressBar<B extends View, P extends View, T extends View> extends UsefulFrameLayout {
     private static final boolean GESTURE_DEBUG = false;//手势debug。
     private static final boolean METHOD_ORDER_DEBUG = false;//方法排序debug。
     private static final boolean VG_INFO_DEBUG = false;//view信息debug。
@@ -57,9 +57,9 @@ public abstract class NewProgressBar<B extends View, P extends View, T extends V
     //////////////////////////////////////////////////
 
     /**
-     * {@link #NewProgressBar(Context, float)}
+     * {@link #ProgressBar(Context, float)}
      */
-    public NewProgressBar(Context context) {
+    public ProgressBar(Context context) {
         this(context, 0);
     }
 
@@ -69,7 +69,7 @@ public abstract class NewProgressBar<B extends View, P extends View, T extends V
      * @param context  上下文。
      * @param progress 进度值。
      */
-    public NewProgressBar(Context context, float progress) {
+    public ProgressBar(Context context, float progress) {
         super(context);
         this.context = context;
         setProgress(progress);
@@ -116,6 +116,9 @@ public abstract class NewProgressBar<B extends View, P extends View, T extends V
     public void animToProgress(int toProgress,long duration){
         float currProgress = getProgress();
         float progressCut = toProgress-currProgress;
+        if(animator!=null){
+            animator.cancel();
+        }
         animator = AnimatorUT.forProgressPercentage(duration,
                 new AnimatorUT.Update() {
                     @Override
@@ -295,7 +298,10 @@ public abstract class NewProgressBar<B extends View, P extends View, T extends V
 
     /**
      * 进度值发生改变时的回调。
+     *
      * 友情提示：此次改变可以由滑动、用户设置产生。
+     * {@link #onTouchEvent(MotionEvent)}
+     * {@link #setProgress(float)}。
      *
      * @param progress            进度。
      * @param progressValueInRoot 进度在父容器中的进度值。
@@ -386,9 +392,6 @@ public abstract class NewProgressBar<B extends View, P extends View, T extends V
      */
     protected void onDown() {
         thumbView.setPressed(true);
-        if(animator!=null){
-            animator.cancel();
-        }
     }
 
     /**
